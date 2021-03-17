@@ -20,22 +20,30 @@ function Home({ userName, setUserName }) {
   return (
     <>
       <Form onSubmit={submitUser}>
-        <Row>
-          <Col className="text-right pr-0">
-            <h2>@</h2>
+        <Row className="alignCenter">
+          <Col>
+            <h1 className="text-white">Are you happy?</h1>
+            <h3 className="cyan">Enter a twitter handle</h3>
           </Col>
           <Col>
-            <FormControl
-              onChange={userTyped}
-              type="text"
-              placeholder="Search"
-              className="mr-sm-2"
-            />
+            <Row>
+              <Col className="text-right">
+                <h2 className="text-white">@</h2>
+              </Col>
+              <Col>
+                <FormControl
+                  onChange={userTyped}
+                  type="text"
+                  placeholder="Search"
+                  className="mr-sm-2"
+                />
+              </Col>
+            </Row>
           </Col>
-          <Col></Col>
         </Row>
-        <Button type="submit" className="m-3">
-          Click Me
+
+        <Button type="submit" className="cyan" variant="outline-light">
+          Search
         </Button>
       </Form>
     </>

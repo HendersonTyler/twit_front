@@ -8,11 +8,16 @@ const User = ({ userName }) => {
   const [userDetails, setUserDetails] = useState({});
 
   useEffect(() => {
-    const getData = async () => {
-      const results = await axios(`http://localhost:5000/user/${userName}`);
-      setUserDetails(results.data);
-    };
-    getData();
+    try {
+      const getData = async () => {
+        const results = await axios(`http://localhost:5000/user/${userName}`);
+        setUserDetails(results.data);
+      };
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+    // eslint-disable-next-line
   }, []);
 
   const graphOptions = {
@@ -21,30 +26,51 @@ const User = ({ userName }) => {
   };
 
   return (
-    <div>
-      {userDetails.profileImage === undefined ? (
-        <p>loading</p>
+    <div className="makeTall">
+      {userDetails === "error" ? (
+        <p className="text-white">
+          Sorry, we couldn't find that user. Please try again.
+        </p>
+      ) : userDetails.profileImage === undefined ? (
+        <p className="text-white">loading</p>
       ) : (
-        <>
-          <h2>{userDetails.name}</h2>
-          <img alt="profile" src={userDetails.profileImage} />
-          <Row>
-            <Col></Col>
+        <div>
+          <Row className="alignCenter">
             <Col>
-              <ReactWordcloud
-                words={userDetails.cloud}
-                options={graphOptions}
+              <h1 className="text-white">{userDetails.name}</h1>
+              <img
+                className="pt-3"
+                alt="profile"
+                src={userDetails.profileImage}
               />
             </Col>
-            <Col></Col>
+            <Col style={{ paddingTop: "20vh" }}>
+              {userDetails.sentiment.score > 0 ? (
+                <p className="h2">😊</p>
+              ) : (
+                <p className="h2">🙁</p>
+              )}
+              <h3 className="cyan">Score: {userDetails.sentiment.score}</h3>
+              <div>
+                <ReactWordcloud
+                  words={userDetails.cloud}
+                  options={graphOptions}
+                  callbacks={{
+                    getWordColor: (word) =>
+                      word.value > 0.1 ? "white" : "cyan",
+                  }}
+                />
+              </div>
+            </Col>
           </Row>
 
-          <h3>Score: {userDetails.sentiment.score}</h3>
-          <h4>Calculation:</h4>
+          <h4 className="text-white">Calculation:</h4>
           {userDetails.sentiment.calculation.map((x, index) => (
-            <p key={index}>{JSON.stringify(x).replace(/"|{|}/g, "")}</p>
+            <p className="text-white" key={index}>
+              {JSON.stringify(x).replace(/"|{|}/g, "")}
+            </p>
           ))}
-        </>
+        </div>
       )}
     </div>
   );
