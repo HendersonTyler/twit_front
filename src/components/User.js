@@ -11,7 +11,9 @@ const User = ({ userName }) => {
   useEffect(() => {
     try {
       const getData = async () => {
-        const results = await axios(`http://localhost:5000/user/${userName}`);
+        const results = await axios(
+          `https://twit-gauge.herokuapp.com/user/${userName}`
+        );
         setUserDetails(results.data);
       };
       getData();

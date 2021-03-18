@@ -45,7 +45,7 @@ function App() {
         <Modal.Body>
           <p>
             Twit Gauge is built on Node.js and React. It takes a Twitter handle
-            and uses Twitter's API to return the users ID, description and
+            and uses Twitter's API to return the user's ID, description and
             profile photo. It then hits Twitter's API again for the past 20
             tweets.
             <br />
