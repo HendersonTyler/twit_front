@@ -3,6 +3,7 @@ import ReactWordcloud from "react-wordcloud";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 const User = ({ userName }) => {
   const [userDetails, setUserDetails] = useState({});
@@ -29,7 +30,7 @@ const User = ({ userName }) => {
     <div className="makeTall">
       {userDetails === "error" ? (
         <p className="text-white">
-          Sorry, we couldn't find that user. Please try again.
+          Sorry, we couldn't find that user. Please <a href="/">try again.</a>
         </p>
       ) : userDetails.profileImage === undefined ? (
         <p className="text-white">loading</p>
@@ -43,6 +44,15 @@ const User = ({ userName }) => {
                 alt="profile"
                 src={userDetails.profileImage}
               />
+              <p className="text-white pt-3">{userDetails.description}</p>
+              <Button className="cyan" variant="outline-light">
+                <a
+                  className="cyan"
+                  href={`https://www.twitter.com/${userName}`}
+                >
+                  View on Twitter
+                </a>
+              </Button>
             </Col>
             <Col style={{ paddingTop: "20vh" }}>
               {userDetails.sentiment.score > 0 ? (
